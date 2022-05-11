@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private MoveController _moveController;
+    [SerializeField]
+    private WeaponBase weaponBase;
     private void Start()
     {
         InputManager.Instance.OnMoveInput += _moveController.Move;
