@@ -8,8 +8,10 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
     public event Action<Vector2> OnMoveInput;
+    public event Action<Vector2> OnRotateInput;
     ActionController _actionController;
     bool _isMove;
+    bool _isRotate;
     public static InputManager Instance 
     {
         get 
@@ -31,6 +33,8 @@ public class InputManager : MonoBehaviour
         _actionController.Enable();
         _actionController.ActionMap.Move.performed += context => { StartMove(context); };
         _actionController.ActionMap.Move.canceled += context => { StopMove(); };
+        _actionController.ActionMap.CameraRotate.performed += context => { StartRotate(context); };
+        _actionController.ActionMap.CameraRotate.canceled += context => { StopRotate(); };
     }
     void StartMove(InputAction.CallbackContext context)
     {
@@ -39,14 +43,29 @@ public class InputManager : MonoBehaviour
     void StopMove()
     {
         _isMove = false;
+    }void StartRotate(InputAction.CallbackContext context)
+    {
+        if(!_isRotate) StartCoroutine(UpdateRotate(context));
     }
-
+    void StopRotate()
+    {
+        _isRotate = false;
+    }
     IEnumerator UpdateMove(InputAction.CallbackContext context)
     {
         _isMove = true;
         while (_isMove)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
+            yield return null;
+        }
+    }
+    IEnumerator UpdateRotate(InputAction.CallbackContext context)
+    {
+        _isRotate = true;
+        while (_isRotate)
+        {
+            OnRotateInput?.Invoke(context.ReadValue<Vector2>());
             yield return null;
         }
     }

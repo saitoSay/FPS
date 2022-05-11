@@ -25,6 +25,14 @@ public class @ActionController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""CameraRotate"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""39ba22e6-53f9-4d24-81f4-fe6d0e1b40ca"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -82,6 +90,17 @@ public class @ActionController : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12b39e55-ab2e-4f3a-a4a4-b41a3930a84d"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -91,6 +110,7 @@ public class @ActionController : IInputActionCollection, IDisposable
         // ActionMap
         m_ActionMap = asset.FindActionMap("ActionMap", throwIfNotFound: true);
         m_ActionMap_Move = m_ActionMap.FindAction("Move", throwIfNotFound: true);
+        m_ActionMap_CameraRotate = m_ActionMap.FindAction("CameraRotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,11 +161,13 @@ public class @ActionController : IInputActionCollection, IDisposable
     private readonly InputActionMap m_ActionMap;
     private IActionMapActions m_ActionMapActionsCallbackInterface;
     private readonly InputAction m_ActionMap_Move;
+    private readonly InputAction m_ActionMap_CameraRotate;
     public struct ActionMapActions
     {
         private @ActionController m_Wrapper;
         public ActionMapActions(@ActionController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_ActionMap_Move;
+        public InputAction @CameraRotate => m_Wrapper.m_ActionMap_CameraRotate;
         public InputActionMap Get() { return m_Wrapper.m_ActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -158,6 +180,9 @@ public class @ActionController : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
+                @CameraRotate.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
+                @CameraRotate.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
+                @CameraRotate.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
             }
             m_Wrapper.m_ActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -165,6 +190,9 @@ public class @ActionController : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @CameraRotate.started += instance.OnCameraRotate;
+                @CameraRotate.performed += instance.OnCameraRotate;
+                @CameraRotate.canceled += instance.OnCameraRotate;
             }
         }
     }
@@ -172,5 +200,6 @@ public class @ActionController : IInputActionCollection, IDisposable
     public interface IActionMapActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnCameraRotate(InputAction.CallbackContext context);
     }
 }

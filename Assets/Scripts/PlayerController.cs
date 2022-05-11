@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private MoveController moveController;
+    private MoveController _moveController;
     private void Start()
     {
-        InputManager.Instance.OnMoveInput += moveController.Move;
+        InputManager.Instance.OnMoveInput += _moveController.Move;
+        InputManager.Instance.OnRotateInput += _moveController.Rotate;
     }
 }
