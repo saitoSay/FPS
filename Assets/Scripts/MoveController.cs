@@ -20,9 +20,9 @@ public class MoveController  : MonoBehaviour
             dir = Camera.main.transform.TransformDirection(dir);
             dir.y = 0;
 
-            Vector3 velo = dir.normalized * _moveSpeed; 
-            velo.y = _rb.velocity.y;  
-            _rb.velocity = velo;   
+            Vector3 velo = dir.normalized * _moveSpeed;
+            velo.y = _rb.velocity.y;
+            _rb.velocity = velo;
         }
     }
     public void Rotate(Vector2 vectar2)

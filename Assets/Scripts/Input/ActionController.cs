@@ -27,14 +27,6 @@ public class @ActionController : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""CameraRotate"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""39ba22e6-53f9-4d24-81f4-fe6d0e1b40ca"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""83ac83e0-dbcf-4530-8d6d-e5beac1b592d"",
@@ -101,17 +93,6 @@ public class @ActionController : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""12b39e55-ab2e-4f3a-a4a4-b41a3930a84d"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""eb7f96a5-862d-4d54-b2d9-9ad164031e9d"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -129,7 +110,6 @@ public class @ActionController : IInputActionCollection, IDisposable
         // ActionMap
         m_ActionMap = asset.FindActionMap("ActionMap", throwIfNotFound: true);
         m_ActionMap_Move = m_ActionMap.FindAction("Move", throwIfNotFound: true);
-        m_ActionMap_CameraRotate = m_ActionMap.FindAction("CameraRotate", throwIfNotFound: true);
         m_ActionMap_Fire = m_ActionMap.FindAction("Fire", throwIfNotFound: true);
     }
 
@@ -181,14 +161,12 @@ public class @ActionController : IInputActionCollection, IDisposable
     private readonly InputActionMap m_ActionMap;
     private IActionMapActions m_ActionMapActionsCallbackInterface;
     private readonly InputAction m_ActionMap_Move;
-    private readonly InputAction m_ActionMap_CameraRotate;
     private readonly InputAction m_ActionMap_Fire;
     public struct ActionMapActions
     {
         private @ActionController m_Wrapper;
         public ActionMapActions(@ActionController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_ActionMap_Move;
-        public InputAction @CameraRotate => m_Wrapper.m_ActionMap_CameraRotate;
         public InputAction @Fire => m_Wrapper.m_ActionMap_Fire;
         public InputActionMap Get() { return m_Wrapper.m_ActionMap; }
         public void Enable() { Get().Enable(); }
@@ -202,9 +180,6 @@ public class @ActionController : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnMove;
-                @CameraRotate.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
-                @CameraRotate.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
-                @CameraRotate.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnCameraRotate;
                 @Fire.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnFire;
@@ -215,9 +190,6 @@ public class @ActionController : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @CameraRotate.started += instance.OnCameraRotate;
-                @CameraRotate.performed += instance.OnCameraRotate;
-                @CameraRotate.canceled += instance.OnCameraRotate;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -228,7 +200,6 @@ public class @ActionController : IInputActionCollection, IDisposable
     public interface IActionMapActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnCameraRotate(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
     }
 }

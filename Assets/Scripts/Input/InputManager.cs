@@ -34,8 +34,6 @@ public class InputManager : MonoBehaviour
         _actionController.Enable();
         _actionController.ActionMap.Move.performed += context => { StartMove(context); };
         _actionController.ActionMap.Move.canceled += context => { StopMove(); };
-        _actionController.ActionMap.CameraRotate.performed += context => { StartRotate(context); };
-        _actionController.ActionMap.CameraRotate.canceled += context => { StopRotate(); };
         _actionController.ActionMap.Fire.performed += context => { StartFire(); };
     }
     void StartMove(InputAction.CallbackContext context)
