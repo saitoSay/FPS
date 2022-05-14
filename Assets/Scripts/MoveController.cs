@@ -6,7 +6,8 @@ public class MoveController  : MonoBehaviour
     Rigidbody _rb;
     [SerializeField]
     float _moveSpeed = 10;
-    [SerializeField] Camera _camera;
+    [SerializeField] 
+    Camera _camera;
     public void Move(Vector2 vectar2)
     {
         Vector3 dir = Vector3.forward * vectar2.y + Vector3.right * vectar2.x;

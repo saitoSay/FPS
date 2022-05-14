@@ -10,24 +10,27 @@ public class Gun : WeaponBase
     LineRenderer _line = null;
     [SerializeField] 
     LayerMask _layerMask = 0;
-    [SerializeField] 
+    [SerializeField]
     float _shootRange = 15f;
+    Ray _ray;
+    RaycastHit _hit;
+    Vector3 _hitPosition;
+    GameObject hitObject;
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
-        RaycastHit hit;
-        Vector3 hitPosition = _line.transform.position + _line.transform.forward * _shootRange;  // hitPosition は Ray が当たった場所。Line の終点となる。何にも当たっていない時は Muzzle から射程距離だけ前方にする。
-        GameObject hitObject = null;    // Ray が当たったオブジェクト
+        _ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
+        _hitPosition = _line.transform.position + _line.transform.forward * _shootRange;
+        hitObject = null;
 
-        // Ray が何かに当たったか・当たっていないかで処理を分ける        
-        if (Physics.Raycast(ray, out hit, _shootRange, _layerMask))
-        {
-            hitPosition = hit.point;    // Ray が当たった場所
-            hitObject = hit.collider.gameObject;    // Ray が洗ったオブジェクト
-        }
+         
     }
     public override void Fire()
     {
-
+        if (Physics.Raycast(_ray, out _hit, _shootRange, _layerMask))
+        {
+            _hitPosition = _hit.point;
+            hitObject = _hit.collider.gameObject;
+        }
+        Debug.Log(hitObject);
     }
 }
