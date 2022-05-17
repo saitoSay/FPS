@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class Gun : WeaponBase
 {
     [SerializeField] 
-    Image _crosshairUi = null;
-    [SerializeField] 
     LineRenderer _line = null;
     [SerializeField] 
     LayerMask _layerMask = 0;
@@ -21,8 +19,6 @@ public class Gun : WeaponBase
         _ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
         _hitPosition = _line.transform.position + _line.transform.forward * _shootRange;
         hitObject = null;
-
-         
     }
     public override void Fire()
     {
@@ -30,6 +26,14 @@ public class Gun : WeaponBase
         {
             _hitPosition = _hit.point;
             hitObject = _hit.collider.gameObject;
+        }
+        if(hitObject != null)
+        {
+            if (hitObject.tag == "Enemy")
+            {
+                EnemyBase enemy = hitObject.GetComponent<EnemyBase>();
+                enemy.Damage(_weaponData.GetAttackPoint());
+            }
         }
         Debug.Log(hitObject);
     }

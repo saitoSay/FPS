@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public abstract class WeaponBase : MonoBehaviour
 {
-    [SerializeField] 
-    GameObject _muzzle = default;
     [SerializeField]
-    GameObject _bulletPrefab = default;
+    protected GameObject _muzzle = default;
+    [SerializeField]
+    protected ScriptableWeaponData _weaponData;
+    [SerializeField]
+    protected Image _crosshairUi = null;
     public virtual void Fire()
     {
         
