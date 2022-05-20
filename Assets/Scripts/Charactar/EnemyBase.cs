@@ -10,6 +10,8 @@ public abstract class EnemyBase : MonoBehaviour
     float _moveSpeed;
     [SerializeField]
     int _attackPoint;
+    [SerializeField]
+    EnemyMoveController _moveController;
     public int CurrentHp { get; private set; }
     private void Start()
     {

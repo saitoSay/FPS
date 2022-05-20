@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     private static InputManager instance;
     public event Action<Vector2> OnMoveInput;
     public event Action<Vector2> OnRotateInput;
+    public event Action OnPauseInput;
     public event Action OnFireInput;
     ActionController _actionController;
     bool _isMove;
@@ -35,7 +36,14 @@ public class InputManager : MonoBehaviour
         _actionController.ActionMap.Move.performed += context => { StartMove(context); };
         _actionController.ActionMap.Move.canceled += context => { StopMove(); };
         _actionController.ActionMap.Fire.performed += context => { StartFire(); };
+        _actionController.ActionMap.Pause.started += context => { ChangePause(); };
     }
+
+    void ChangePause()
+    {
+        OnPauseInput?.Invoke();
+    }
+
     void StartMove(InputAction.CallbackContext context)
     {
         if(!_isMove) StartCoroutine(UpdateMove(context));

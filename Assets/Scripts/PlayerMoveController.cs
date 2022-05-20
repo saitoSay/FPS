@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
-public class MoveController  : MonoBehaviour
+public class PlayerMoveController  : MonoBehaviour
 {
     [SerializeField]
     Rigidbody _rb;
