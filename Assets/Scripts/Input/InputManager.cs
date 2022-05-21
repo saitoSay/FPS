@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         _actionController.ActionMap.Move.performed += context => { StartMove(context); };
         _actionController.ActionMap.Move.canceled += context => { StopMove(); };
         _actionController.ActionMap.Fire.performed += context => { StartFire(); };
-        _actionController.ActionMap.Pause.started += context => { ChangePause(); };
+        _actionController.ActionMap.Pause.performed += context => { ChangePause(); };
     }
 
     void ChangePause()

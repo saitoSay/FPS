@@ -4,40 +4,31 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-    bool _isPause;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                var obj = new GameObject("GameManager");
-                var gameManager = obj.AddComponent<GameManager>();
-                gameManager.AwakeSet();
-                instance = gameManager;
-                DontDestroyOnLoad(obj);
-            }
-            return instance;
-        }
-    }
-    private void AwakeSet()
-    {
-        InputManager.Instance.OnPauseInput += Pause;
-    }
+    public bool _isPause;
+    public static GameManager Instance { get; private set; }
     private void Start()
     {
         Init();
     }
     public void Init()
     {
+        InputManager.Instance.OnPauseInput += Pause;
         _isPause = false;
         Cursor.visible = false;
     }
     public void Pause()
     {
-        if (_isPause) Cursor.visible = true;
-        else Cursor.visible = false;
+        if (_isPause)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            _isPause = false;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            _isPause = true;
+        }
     }
 }
