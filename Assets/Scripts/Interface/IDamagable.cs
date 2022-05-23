@@ -1,4 +1,4 @@
-﻿public interface IDamage
+﻿public interface IDamagable
 {
     int HP { get; }
     int AttackPoint { get; }

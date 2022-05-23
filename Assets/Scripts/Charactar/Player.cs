@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamage
+public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField]
     int _hp;
