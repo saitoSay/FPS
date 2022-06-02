@@ -7,20 +7,44 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField]
     int _hp;
     [SerializeField]
-    float _moveSpeed;
-    [SerializeField]
     int _attackPoint;
+    [SerializeField]
+    float _attackRange;
+    [SerializeField]
+    float _attackFreezeTime;
+    [SerializeField]
+    GameObject _attackCollider;
+
     public EnemyStates EnemyState { get; private set; }
     public int CurrentHp { get; private set; }
     private void Start()
     {
         Init();
     }
+    private void Update()
+    {
+        float distance = Vector2.Distance(this.transform.position, GameManager.Instance._player.transform.position);
+        //vector2がx,y,zどの成分を持ってきているのか確認
+        Debug.Log(GameManager.Instance._player.transform.position);
+        if (distance < _attackRange && EnemyState == EnemyStates.Walk)
+        {
+            EnemyState = EnemyStates.Attack;
+            StartCoroutine(Attack());
+        }
+    }
     private void Init()
     {
         CurrentHp = _hp;
     }
-    public virtual void Attack() { }
+    public virtual IEnumerator Attack()
+    {
+        GameManager.Instance._player.Damage(_attackPoint);
+        _attackCollider.SetActive(false);
+        yield return new WaitForSeconds(_attackFreezeTime);
+
+        EnemyState = EnemyStates.Walk;
+        yield break;
+    }
     public virtual void Damage(int attackPoint) 
     {
         CurrentHp -= attackPoint;
@@ -39,14 +63,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            EnemyState = EnemyStates.Attack;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            EnemyState = EnemyStates.Walk;
+
         }
     }
 }

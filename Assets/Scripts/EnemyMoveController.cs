@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMoveController : MonoBehaviour
 {
-    bool _isMove = true;
     [SerializeField]
     float _moveSpeed = 5;
     [SerializeField]
