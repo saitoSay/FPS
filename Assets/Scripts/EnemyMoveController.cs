@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class EnemyMoveController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool _isMove = true;
+    [SerializeField]
+    float _moveSpeed = 5;
+    [SerializeField]
+    Rigidbody _rb;
+    [SerializeField]
+    EnemyBase _enemy;
+    private void Update()
     {
-        
+        if (_enemy.EnemyState == EnemyStates.Walk)
+        {
+            Move();
+        }
+        Rotate();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Move()
     {
-        
+        Vector3 velo = transform.forward * _moveSpeed;
+        velo.y = _rb.velocity.y;
+        _rb.velocity = velo;
+    }
+    public void Rotate()
+    {
+        // 対象物と自分自身の座標からベクトルを算出
+        Vector3 vector3 = GameManager.Instance._player.transform.position - this.transform.position;
+        vector3.y = 0f;
+
+        Quaternion quaternion = Quaternion.LookRotation(vector3);
+        this.transform.rotation = quaternion;
     }
 }

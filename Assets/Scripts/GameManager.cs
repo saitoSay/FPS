@@ -5,14 +5,28 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool _isPause;
-    public static GameManager Instance { get; private set; }
-    private void Start()
+    public Player _player;
+    private static GameManager instance;
+    public static GameManager Instance
     {
-        Init();
+        get
+        {
+            if (instance == null)
+            {
+                var obj = new GameObject("GameManager");
+                var mangager = obj.AddComponent<GameManager>();
+                mangager.Init();
+                instance = mangager;
+                DontDestroyOnLoad(obj);
+            }
+            return instance;
+        }
     }
     public void Init()
     {
         InputManager.Instance.OnPauseInput += Pause;
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        _player = obj.GetComponent<Player>();
         _isPause = false;
         Cursor.visible = false;
     }

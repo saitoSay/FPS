@@ -10,8 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
     float _moveSpeed;
     [SerializeField]
     int _attackPoint;
-    [SerializeField]
-    EnemyMoveController _moveController;
+    public EnemyStates EnemyState { get; private set; }
     public int CurrentHp { get; private set; }
     private void Start()
     {
@@ -36,4 +35,25 @@ public abstract class EnemyBase : MonoBehaviour
         //ここで爆発など、死ぬときの演出を実行する
         Destroy(this.gameObject);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            EnemyState = EnemyStates.Attack;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            EnemyState = EnemyStates.Walk;
+        }
+    }
 }
+public enum EnemyStates
+{
+    Walk,
+    Wait,
+    Attack,
+    Freeze
+};

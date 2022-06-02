@@ -6,12 +6,9 @@ public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField]
     int _hp;
-    [SerializeField]
-    int _attack;
     int _currentHp;
     public int HP { get => _hp;  }
 
-    public int AttackPoint => _attack;
 
 
     public void Damage(int attackPoint)
