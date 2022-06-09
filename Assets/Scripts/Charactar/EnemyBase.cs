@@ -23,9 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
     }
     private void Update()
     {
-        float distance = Vector2.Distance(this.transform.position, GameManager.Instance._player.transform.position);
-        //vector2がx,y,zどの成分を持ってきているのか確認
-        Debug.Log(GameManager.Instance._player.transform.position);
+        float distance = Vector3.Distance(this.transform.position, GameManager.Instance._player.transform.position);
         if (distance < _attackRange && EnemyState == EnemyStates.Walk)
         {
             EnemyState = EnemyStates.Attack;
@@ -38,7 +36,9 @@ public abstract class EnemyBase : MonoBehaviour
     }
     public virtual IEnumerator Attack()
     {
-        GameManager.Instance._player.Damage(_attackPoint);
+        _attackCollider.SetActive(true);
+        yield return null;
+
         _attackCollider.SetActive(false);
         yield return new WaitForSeconds(_attackFreezeTime);
 
@@ -52,7 +52,6 @@ public abstract class EnemyBase : MonoBehaviour
         {
             Dead();
         }
-        Debug.Log(CurrentHp);
     }
     public virtual void Dead()
     {
@@ -63,7 +62,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-
+            GameManager.Instance._player.Damage(_attackPoint);
         }
     }
 }
