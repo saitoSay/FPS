@@ -12,6 +12,7 @@ public class EnemyMoveController : MonoBehaviour
     EnemyBase _enemy;
     private void Update()
     {
+        if (!GameManager.Instance.InGame) return;
         if (_enemy.EnemyState == EnemyStates.Walk)
         {
             Move();

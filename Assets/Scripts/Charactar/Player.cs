@@ -14,6 +14,15 @@ public class Player : MonoBehaviour, IDamagable
     public void Damage(int attackPoint)
     {
         _currentHp -= attackPoint;
+        Debug.Log(_currentHp);
+        if (_currentHp <= 0)
+        {
+            Dead();
+        }
+    }
+    private void Dead()
+    {
+        EventManager.GameEnd();
     }
     private void Start()
     {

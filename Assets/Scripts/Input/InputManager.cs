@@ -51,7 +51,8 @@ public class InputManager : MonoBehaviour
     void StopMove()
     {
         _isMove = false;
-    }void StartRotate(InputAction.CallbackContext context)
+    }
+    void StartRotate(InputAction.CallbackContext context)
     {
         if(!_isRotate) StartCoroutine(UpdateRotate(context));
     }

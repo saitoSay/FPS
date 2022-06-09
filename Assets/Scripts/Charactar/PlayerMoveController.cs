@@ -10,6 +10,7 @@ public class PlayerMoveController  : MonoBehaviour
     Camera _camera;
     public void Move(Vector2 vectar2)
     {
+        if (GameManager.Instance.InGame == false) return;
         Vector3 dir = Vector3.forward * vectar2.y + Vector3.right * vectar2.x;
 
         if (dir == Vector3.zero)
@@ -28,6 +29,7 @@ public class PlayerMoveController  : MonoBehaviour
     }
     public void Rotate(Vector2 vectar2)
     {
+        if (GameManager.Instance.InGame == false) return;
         Vector3 vec3 = _camera.transform.rotation.eulerAngles;
         vec3.x = 0;
         vec3.z = 0;

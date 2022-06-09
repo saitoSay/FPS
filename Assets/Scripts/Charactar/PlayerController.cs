@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
+        if (GameManager.Instance.InGame == false) return;
         _weapon.Fire();
     }
 }

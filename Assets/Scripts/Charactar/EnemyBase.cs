@@ -23,6 +23,12 @@ public abstract class EnemyBase : MonoBehaviour
     }
     private void Update()
     {
+        if (GameManager.Instance.InGame == false) return;
+        SearchPlayer();
+    }
+
+    private void SearchPlayer()
+    {
         float distance = Vector3.Distance(this.transform.position, GameManager.Instance._player.transform.position);
         if (distance < _attackRange && EnemyState == EnemyStates.Walk)
         {
@@ -30,6 +36,7 @@ public abstract class EnemyBase : MonoBehaviour
             StartCoroutine(Attack());
         }
     }
+
     private void Init()
     {
         CurrentHp = _hp;
@@ -55,7 +62,6 @@ public abstract class EnemyBase : MonoBehaviour
     }
     public virtual void Dead()
     {
-        //ここで爆発など、死ぬときの演出を実行する
         Destroy(this.gameObject);
     }
     private void OnTriggerEnter(Collider other)

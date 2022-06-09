@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 228706000}
   - component: {fileID: 228705999}
   m_Layer: 0
-  m_Name: CM vcam1
+  m_Name: CinemachineCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aedbd9a44a12934ba96845be150bd04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 0
+  _hp: 10
 --- !u!1 &477042960
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &477042961
 Transform:
   m_ObjectHideFlags: 0
@@ -1756,7 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 10
-  _attackPoint: 3
+  _attackPoint: 6
   _attackRange: 2
   _attackFreezeTime: 1
   _attackCollider: {fileID: 477042960}
