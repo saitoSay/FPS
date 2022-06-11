@@ -230,7 +230,6 @@ GameObject:
   - component: {fileID: 454034484}
   - component: {fileID: 454034483}
   - component: {fileID: 454034482}
-  - component: {fileID: 454034487}
   - component: {fileID: 454034488}
   - component: {fileID: 454034486}
   - component: {fileID: 454034489}
@@ -333,20 +332,6 @@ MonoBehaviour:
   _rb: {fileID: 454034488}
   _moveSpeed: 3
   _camera: {fileID: 963194227}
---- !u!114 &454034487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454034481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e72e789ca584214aad4feef6a58cb09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveController: {fileID: 454034486}
-  _weapon: {fileID: 481835126}
 --- !u!54 &454034488
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -376,6 +361,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 10
+  _moveController: {fileID: 454034486}
+  _weapon: {fileID: 481835126}
+  _attackRate: 1
 --- !u!1 &477042960
 GameObject:
   m_ObjectHideFlags: 0

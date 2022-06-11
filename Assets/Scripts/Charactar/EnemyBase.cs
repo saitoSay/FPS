@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour,IDamagable
 {
     [SerializeField]
     int _hp;
+    public int HP { get => _hp; }
     [SerializeField]
     int _attackPoint;
     [SerializeField]
