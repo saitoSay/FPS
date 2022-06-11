@@ -9,7 +9,7 @@ public class Gun : WeaponBase
     [SerializeField] 
     LayerMask _layerMask = 0;
     [SerializeField]
-    float _shootRange = 15f;
+    float _attackRange = 15f;
     Ray _ray;
     RaycastHit _hit;
     GameObject hitObject;
@@ -19,7 +19,7 @@ public class Gun : WeaponBase
 
         _ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
 
-        if (Physics.Raycast(_ray, out _hit, _shootRange, _layerMask))
+        if (Physics.Raycast(_ray, out _hit, _attackRange, _layerMask))
         {
             hitObject = _hit.collider.gameObject;
         }

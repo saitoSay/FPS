@@ -522,7 +522,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 1
-  _shootRange: 15
+  _attackRange: 15
 --- !u!1 &612954408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1746,7 @@ MonoBehaviour:
   _hp: 10
   _attackPoint: 6
   _attackRange: 2
-  _attackFreezeTime: 1
+  _attackRate: 0
   _attackCollider: {fileID: 477042960}
 --- !u!114 &2024814691
 MonoBehaviour:

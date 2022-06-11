@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public void GameEnd()
     {
         InGame = false;
+        Debug.Log("GameEnd");
     }
     public void ChangePause()
     {

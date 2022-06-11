@@ -12,7 +12,7 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
     [SerializeField]
     float _attackRange;
     [SerializeField]
-    float _attackFreezeTime;
+    float _attackRate;
     [SerializeField]
     GameObject _attackCollider;
 
@@ -48,7 +48,7 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
         yield return null;
 
         _attackCollider.SetActive(false);
-        yield return new WaitForSeconds(_attackFreezeTime);
+        yield return new WaitForSeconds(_attackRate);
 
         EnemyState = EnemyStates.Walk;
         yield break;
