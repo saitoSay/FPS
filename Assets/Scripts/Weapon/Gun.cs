@@ -6,25 +6,36 @@ public class Gun : WeaponBase
 {
     [SerializeField] 
     LineRenderer _line = null;
+    /// <summary>
+    /// 攻撃が当たるレイヤー
+    /// </summary>
     [SerializeField] 
     LayerMask _layerMask = 0;
+    /// <summary>
+    /// 射程距離
+    /// </summary>
     [SerializeField]
     float _attackRange = 15f;
-    Ray _ray;
-    RaycastHit _hit;
-    Vector3 _hitPosition;
+    [SerializeField]
+    ParticleSystem _shotEffect;
     GameObject hitObject;
+
     public override void Fire()
     {
         if (GameManager.Instance.InPause) return;
-
-        _ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
-        _hitPosition = _line.transform.position + _line.transform.forward * _attackRange;
-
-        if (Physics.Raycast(_ray, out _hit, _attackRange, _layerMask))
+        if (_crosshairUi == null)
         {
-            _hitPosition = _hit.point;
-            hitObject = _hit.collider.gameObject;
+            _crosshairUi = GameObject.Find("Crosshair").GetComponent<Image>();
+        }
+        // カメラから照準に向かってRayを飛ばし、当たっているオブジェクトを調べる
+        Ray ray = Camera.main.ScreenPointToRay(_crosshairUi.rectTransform.position);
+        RaycastHit hit;
+        //Vector3 _hitPosition = _line.transform.position + _line.transform.forward * _attackRange;
+
+        if (Physics.Raycast(ray, out hit, _attackRange, _layerMask))
+        {
+            //_hitPosition = hit.point;
+            hitObject = hit.collider.gameObject;
         }
         if(hitObject != null)
         {
@@ -34,6 +45,9 @@ public class Gun : WeaponBase
                 enemy.Damage(_weaponData.GetAttackPoint());
             }
         }
-        Debug.Log(hitObject);
+        if (_shotEffect)
+        {
+            _shotEffect.Play();
+        }
     }
 }

@@ -1,22 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
+    private const int c_defaultTimeScale = 1;
+    private const int c_stopTimeScale = 0;
+
     public bool InGame { get; private set; }
     public bool InPause { get; private set; }
+    /// <summary>
+    /// 勝利フラグ
+    /// </summary>
     private bool _winFrag;
     public Player _player;
-    int _currentTargetNum;
+    public event Action<int> OnEnemyCount;
+
+    public event Action<int> OnPlayerUpdate;
+    /// <summary>
+    /// 倒す敵の残数
+    /// </summary>
+    int _currentEnemyCount;
     public int CurrentTargetNum
     {
-        get { return _currentTargetNum; }
+        get { return _currentEnemyCount; }
         set
         {
-            _currentTargetNum = value;
-            if (_currentTargetNum <= 0)
+            _currentEnemyCount = value;
+            OnEnemyCount?.Invoke(_currentEnemyCount);
+            //敵の数が0になったらゲームエンド
+            if (_currentEnemyCount <= 0)
             {
                 _winFrag = true;
                 EventManager.GameEnd();
@@ -42,31 +56,52 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    /// <summary>
+    /// ゲーム開始処理
+    /// </summary>
     public void GameStart()
     {
         InputManager.Instance.OnPauseInput += ChangePause;
+
         GameObject obj = GameObject.FindGameObjectWithTag("Player");
         _player = obj.GetComponent<Player>();
+        _player.OnChangeHp += PlayerUpdate;
+        _player.StartControl();
+
         var camera = GameObject.FindGameObjectWithTag("SubCamera");
-        instance._camera = camera.GetComponent<CinemachineVirtualCamera>();
+        Instance._camera = camera.GetComponent<CinemachineVirtualCamera>();
         _camera.enabled = true;
+
         InGame = true;
         _winFrag = false;
+
         PauseOut();
+
         Cursor.visible = false;
-        CurrentTargetNum = Data._targetNum;
+        CurrentTargetNum = GameData.c_targetNum;
+
         FadeController.StartFadeIn();
     }
+    /// <summary>
+    /// ゲーム終了処理
+    /// </summary>
     public void GameEnd()
     {
         InputManager.Instance.OnPauseInput -= ChangePause;
-        InGame = false;
-        _camera.enabled = false;
+        _player.OnChangeHp -= PlayerUpdate;
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        if(_winFrag) SceneChange.LoadScene("ResultScene");
+
+        InGame = false;
+        _camera.enabled = false;
+
+        if (_winFrag) SceneChange.LoadScene("ResultScene");
         else SceneChange.LoadScene("GameoverScene");
     }
+    /// <summary>
+    /// ポーズ状況の変更
+    /// </summary>
     public void ChangePause()
     {
         if (InGame == false) return;
@@ -83,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     private void PauseOut()
     {
-        Time.timeScale = 1;
+        Time.timeScale = c_defaultTimeScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         InPause = false;
@@ -91,9 +126,13 @@ public class GameManager : MonoBehaviour
 
     private void PauseIn()
     {
-        Time.timeScale = 0;
+        Time.timeScale = c_stopTimeScale;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         InPause = true;
+    }
+    private void PlayerUpdate(int hp)
+    {
+        OnPlayerUpdate?.Invoke(hp);
     }
 }

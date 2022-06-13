@@ -7,14 +7,28 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
     [SerializeField]
     int _hp;
     public int HP { get => _hp; }
+    /// <summary>
+    /// 攻撃力
+    /// </summary>
     [SerializeField]
     int _attackPoint;
+    /// <summary>
+    /// 攻撃をする距離
+    /// </summary>
     [SerializeField]
     float _attackRange;
+    /// <summary>
+    /// 攻撃速度
+    /// </summary>
     [SerializeField]
     float _attackRate;
+    /// <summary>
+    /// 攻撃判定
+    /// </summary>
     [SerializeField]
     GameObject _attackCollider;
+    [SerializeField]
+    ParticleSystem _hitEffect;
 
     public EnemyStates EnemyState { get; private set; }
     public int CurrentHp { get; private set; }
@@ -44,6 +58,7 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
     }
     public virtual IEnumerator Attack()
     {
+        //1フレームだけ当たり判定を作成
         _attackCollider.SetActive(true);
         yield return null;
 
@@ -56,6 +71,10 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
     public virtual void Damage(int attackPoint) 
     {
         CurrentHp -= attackPoint;
+        if (_hitEffect)
+        {
+            _hitEffect.Play();
+        }
         if (CurrentHp <= 0)
         {
             Dead();

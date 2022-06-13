@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-
+/// <summary>
+/// 武器のデータクラス
+/// </summary>
 [CreateAssetMenu (menuName = "ScriptableObjects/CreateEnemyParamAsset")]
 public class ScriptableWeaponData : ScriptableObject
 {

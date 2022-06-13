@@ -1,26 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    [SerializeField]
-    int _hp;
     int _currentHp;
-    public int HP { get => _hp;  }
+    public int HP { get => _currentHp;  }
     [SerializeField]
     PlayerMoveController _moveController;
     [SerializeField]
     WeaponBase _weapon;
+    /// <summary>
+    /// 攻撃速度
+    /// </summary>
     [SerializeField]
     float _attackRate;
     bool _isAttack;
-
-    private void Start()
+    public event Action<int> OnChangeHp;
+    public void StartControl()
     {
         InputManager.Instance.OnMoveInput += _moveController.Move;
         InputManager.Instance.OnFireInput += Attack;
-        _currentHp = HP;
+        _currentHp = GameData.c_startPlayerHp;
         _isAttack = true;
     }
     public void Attack()
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour, IDamagable
     public void Damage(int attackPoint)
     {
         _currentHp -= attackPoint;
-        Debug.Log(_currentHp);
+        OnChangeHp?.Invoke(_currentHp);
         if (_currentHp <= 0)
         {
             Dead();

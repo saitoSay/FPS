@@ -2,8 +2,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using System.Collections.Generic;
 
+/// <summary>
+/// 入力を管理するクラス
+/// </summary>
 public class InputManager : MonoBehaviour
 {
     private static InputManager instance;

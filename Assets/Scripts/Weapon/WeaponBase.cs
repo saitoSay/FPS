@@ -10,8 +10,5 @@ public abstract class WeaponBase : MonoBehaviour
     protected ScriptableWeaponData _weaponData;
     [SerializeField]
     protected Image _crosshairUi = null;
-    public virtual void Fire()
-    {
-        
-    }
+    public abstract void Fire();
 }
