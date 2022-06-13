@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 793124893}
   - component: {fileID: 793124892}
   m_Layer: 0
-  m_Name: TitleManager
+  m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,8 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0892e53ab651b418c9a06b74bad1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startButton: {fileID: 2026549827}
-  _startText: {fileID: 1996791605}
 --- !u!4 &793124893
 Transform:
   m_ObjectHideFlags: 0
@@ -597,7 +595,7 @@ GameObject:
   - component: {fileID: 2026549828}
   - component: {fileID: 2026549827}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -667,14 +665,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 793124892}
-        m_MethodName: ChangeMainScene
-        m_Mode: 1
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MainScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2026549828

@@ -51,6 +51,8 @@ public class Player : MonoBehaviour, IDamagable
     }
     private void Dead()
     {
+        InputManager.Instance.OnMoveInput -= _moveController.Move;
+        InputManager.Instance.OnFireInput -= Attack;
         EventManager.GameEnd();
     }
 }

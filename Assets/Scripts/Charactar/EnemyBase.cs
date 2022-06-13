@@ -63,6 +63,8 @@ public abstract class EnemyBase : MonoBehaviour,IDamagable
     }
     public virtual void Dead()
     {
+        //クリアまでの目標数を1減らす
+        GameManager.Instance.CurrentTargetNum -= 1;
         Destroy(this.gameObject);
     }
     private void OnTriggerEnter(Collider other)

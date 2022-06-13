@@ -1,45 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class SceneChange
+﻿public class SceneChange
 {
     private static bool roadNow = false;
 
     /// <summary>
-    /// Titleシーンに移行する
+    /// Mainシーンに移行する
     /// </summary>
-    public static void RoadTitle()
+    public static void LoadMain()
     {
         if (roadNow)
         {
             return;
         }
         roadNow = true;
-        FadeController.StartFadeOut(Title);
+        FadeController.StartFadeOutIn(Main, EventManager.GameStart);
     }
     /// <summary>
-    /// Gameシーンに移行する
+    /// シーンをロードする
     /// </summary>
-    public static void LoadGame(string name)
+    public static void LoadScene(string name)
     {
         if (roadNow)
         {
             return;
         }
         roadNow = true;
-        FadeController.StartFadeOut(() => Game(name));
+        FadeController.StartFadeOutIn(() => Change(name));
     }
 
-    private static void Title()
+    private static void Main()
     {
         roadNow = false;
-        SceneManager.LoadScene("TitleScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
-    private static void Game(string name)
+    private static void Change(string name)
     {
         roadNow = false;
-        SceneManager.LoadScene(name);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
     }
 }
